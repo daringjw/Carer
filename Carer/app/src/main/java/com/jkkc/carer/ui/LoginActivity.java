@@ -1,19 +1,28 @@
 package com.jkkc.carer.ui;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.jkkc.carer.R;
+
+import kr.co.namee.permissiongen.PermissionFail;
+import kr.co.namee.permissiongen.PermissionGen;
+import kr.co.namee.permissiongen.PermissionSuccess;
 
 /**
  * Created by Guan on 2018/5/23.
  */
 
-public class LoginActivity extends AppCompatActivity{
+public class LoginActivity extends AppCompatActivity {
+
+    private ImageView mBtnLogin;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -23,12 +32,42 @@ public class LoginActivity extends AppCompatActivity{
 
 //        AppManager.getAppManager().addActivity(this);
 
-        ImageView btnLogin = (ImageView) findViewById(R.id.btnLogin);
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+        mBtnLogin = (ImageView) findViewById(R.id.btnLogin);
+
+
+        PermissionGen.with(this)
+                .addRequestCode(100)
+                .permissions(
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.RECORD_AUDIO,
+                        Manifest.permission.ACCESS_COARSE_LOCATION)
+                .request();
+
+
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                           int[] grantResults) {
+
+        PermissionGen.onRequestPermissionsResult(this, requestCode,
+                permissions, grantResults);
+
+
+    }
+
+    @PermissionSuccess(requestCode = 100)
+    public void doSomething() {
+
+
+        Toast.makeText(this, "大人，权限已经开启", Toast.LENGTH_SHORT).show();
+        mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                startActivity(new Intent(getApplicationContext(),HomeActivity.class));
+                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                 finish();
 
 
@@ -36,7 +75,31 @@ public class LoginActivity extends AppCompatActivity{
         });
 
 
+    }
 
+    @PermissionFail(requestCode = 100)
+    public void doFailSomething() {
+
+        mBtnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                ToastUtils.showShort("请允许所需要的权限");
+
+
+            }
+        });
+
+        ToastUtils.showShort("请允许所需要的权限");
+
+        PermissionGen.with(this)
+                .addRequestCode(100)
+                .permissions(
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.RECORD_AUDIO,
+                        Manifest.permission.ACCESS_COARSE_LOCATION)
+                .request();
 
 
     }

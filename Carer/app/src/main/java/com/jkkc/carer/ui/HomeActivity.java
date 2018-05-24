@@ -53,6 +53,7 @@ public class HomeActivity extends AppCompatActivity {
             this.context = context;
 
             if (fragmentMap == null) {
+
                 fragmentMap = new SparseArray();
                 fragmentMap.put(0, new DailyCareFragment());
                 fragmentMap.put(1, new DailyWorkFragment());
