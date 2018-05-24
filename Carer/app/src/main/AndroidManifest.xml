@@ -8,7 +8,6 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO"></uses-permission>
 
 
-
     <application
         android:name=".Common.BaseApplication"
         android:allowBackup="true"
@@ -36,6 +35,18 @@
 
         <activity
             android:name=".ui.HomeActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            ></activity>
+
+        <activity
+            android:name=".ui.activity.PersonalInfoActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            ></activity>
+
+        <activity
+            android:name=".ui.activity.ModifyPwdActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             ></activity>

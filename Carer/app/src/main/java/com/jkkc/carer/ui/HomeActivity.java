@@ -10,11 +10,14 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.SparseArray;
+import android.view.KeyEvent;
+import android.widget.Toast;
 
 import com.jkkc.carer.R;
 import com.jkkc.carer.ui.fragment.DailyCareFragment;
 import com.jkkc.carer.ui.fragment.DailyWorkFragment;
 import com.jkkc.carer.ui.fragment.MineFragment;
+import com.jkkc.carer.utils.AppManager;
 
 /**
  * Created by Guan on 2018/5/23.
@@ -22,11 +25,15 @@ import com.jkkc.carer.ui.fragment.MineFragment;
 
 public class HomeActivity extends AppCompatActivity {
 
+    private long exitTime = 0;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_home);
+
+        AppManager.getAppManager().addActivity(this);
 
         //Fragment+ViewPager+FragmentViewPager组合的使用
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
@@ -79,6 +86,26 @@ public class HomeActivity extends AppCompatActivity {
             return titles[position];
         }
 
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            exit();
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    public void exit() {
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            Toast.makeText(getApplicationContext(), "再按一次退出程序",
+                    Toast.LENGTH_SHORT).show();
+            exitTime = System.currentTimeMillis();
+        } else {
+            finish();
+            System.exit(0);
+        }
     }
 
 
