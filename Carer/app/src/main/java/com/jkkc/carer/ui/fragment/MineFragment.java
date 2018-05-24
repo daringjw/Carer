@@ -22,9 +22,13 @@ public class MineFragment extends Fragment {
 
         View view = View.inflate(getActivity(), R.layout.fragment_mine, null);
 
+
+
         return view;
 
     }
+
+
 
 
 }
