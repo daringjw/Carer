@@ -18,6 +18,7 @@ import com.jkkc.carer.ui.fragment.DailyCareFragment;
 import com.jkkc.carer.ui.fragment.DailyWorkFragment;
 import com.jkkc.carer.ui.fragment.MineFragment;
 import com.jkkc.carer.utils.AppManager;
+import com.tencent.bugly.beta.Beta;
 
 /**
  * Created by Guan on 2018/5/23.
@@ -32,6 +33,9 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_home);
+
+        //主动升级
+        Beta.checkUpgrade();
 
         AppManager.getAppManager().addActivity(this);
 

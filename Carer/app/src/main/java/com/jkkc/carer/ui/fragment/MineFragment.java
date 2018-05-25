@@ -8,12 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.blankj.utilcode.util.AppUtils;
 import com.jkkc.carer.R;
 import com.jkkc.carer.ui.LoginActivity;
 import com.jkkc.carer.ui.activity.ModifyPwdActivity;
 import com.jkkc.carer.ui.activity.PersonalInfoActivity;
 import com.jkkc.carer.utils.AppManager;
+import com.tencent.bugly.beta.Beta;
 
 /**
  * Created by Guan on 2018/5/24.
@@ -33,12 +36,11 @@ public class MineFragment extends Fragment {
         RelativeLayout rlLogout = view.findViewById(R.id.rlLogout);
 
 
-
         rlBaseInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                startActivity(new Intent(getActivity(),PersonalInfoActivity.class));
+                startActivity(new Intent(getActivity(), PersonalInfoActivity.class));
 
 
             }
@@ -49,7 +51,7 @@ public class MineFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                startActivity(new Intent(getActivity(),ModifyPwdActivity.class));
+                startActivity(new Intent(getActivity(), ModifyPwdActivity.class));
 
             }
         });
@@ -66,12 +68,23 @@ public class MineFragment extends Fragment {
         });
 
 
+        TextView tvVersion = view.findViewById(R.id.tvVersion);
+        tvVersion.setText("版本号：" + AppUtils.getAppVersionName() + AppUtils.getAppVersionCode());
+
+        RelativeLayout rlCheckVersion = view.findViewById(R.id.rlCheckVersion);
+        rlCheckVersion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Beta.checkUpgrade();
+
+            }
+        });
+
 
         return view;
 
     }
-
-
 
 
 }

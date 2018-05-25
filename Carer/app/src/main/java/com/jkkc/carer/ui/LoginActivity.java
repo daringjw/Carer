@@ -7,7 +7,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.jkkc.carer.R;
 
@@ -43,6 +45,12 @@ public class LoginActivity extends AppCompatActivity {
                         Manifest.permission.RECORD_AUDIO,
                         Manifest.permission.ACCESS_COARSE_LOCATION)
                 .request();
+
+
+        TextView tvVersion = (TextView) findViewById(R.id.tvVersion);
+        tvVersion.setText("版本号：" + AppUtils.getAppVersionName() + AppUtils.getAppVersionCode());
+
+
 
 
     }
