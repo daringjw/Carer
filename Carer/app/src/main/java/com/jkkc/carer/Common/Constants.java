@@ -6,8 +6,10 @@ package com.jkkc.carer.Common;
 
 public class Constants {
 
-    public static final String IP = "182.92.3.109";
-    public static final String PORT = ":10100";
+    //  http://123.56.65.127:28088
+
+    public static final String IP = "123.56.65.127";
+    public static final String PORT = ":28088";
 
 
     //baseUrl
