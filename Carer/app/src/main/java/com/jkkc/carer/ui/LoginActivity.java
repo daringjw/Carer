@@ -39,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
                 .addRequestCode(100)
                 .permissions(
                         Manifest.permission.CAMERA,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         Manifest.permission.RECORD_AUDIO,
                         Manifest.permission.ACCESS_COARSE_LOCATION)
