@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.jkkc.carer.R;
@@ -63,7 +62,6 @@ public class LoginActivity extends AppCompatActivity {
     public void doSomething() {
 
 
-        Toast.makeText(this, "大人，权限已经开启", Toast.LENGTH_SHORT).show();
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
