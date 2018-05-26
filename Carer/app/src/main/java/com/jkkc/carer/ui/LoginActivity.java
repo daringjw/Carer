@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.jkkc.carer.R;
 
+import cn.jpush.android.api.JPushInterface;
 import kr.co.namee.permissiongen.PermissionFail;
 import kr.co.namee.permissiongen.PermissionGen;
 import kr.co.namee.permissiongen.PermissionSuccess;
@@ -23,6 +25,7 @@ import kr.co.namee.permissiongen.PermissionSuccess;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private static final String TAG1 = LoginActivity.class.getSimpleName();
     private ImageView mBtnLogin;
 
     @Override
@@ -50,7 +53,8 @@ public class LoginActivity extends AppCompatActivity {
         TextView tvVersion = (TextView) findViewById(R.id.tvVersion);
         tvVersion.setText("版本号：" + AppUtils.getAppVersionName() + AppUtils.getAppVersionCode());
 
-
+        String registrationID = JPushInterface.getRegistrationID(this);
+        Log.d(TAG1, "registrationID=" + registrationID);
 
 
     }
@@ -73,7 +77,6 @@ public class LoginActivity extends AppCompatActivity {
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
 
 
                 startActivity(new Intent(getApplicationContext(), HomeActivity.class));
