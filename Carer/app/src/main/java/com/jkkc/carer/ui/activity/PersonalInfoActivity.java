@@ -61,11 +61,25 @@ public class PersonalInfoActivity extends AppCompatActivity {
     // 1: qq, 2: weixin
     private int type;
 
+    // 编辑个人信息结果
+    private static final int Edit_result= 105;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_personal_info);
+
+        TextView tvEdit = (TextView) findViewById(R.id.tvEdit);
+        tvEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getApplicationContext(), EditPersonInfoActivity.class);
+                startActivityForResult(intent,Edit_result);
+
+            }
+        });
 
 
         ImageView ivBack = (ImageView) findViewById(R.id.ivBack);

@@ -67,6 +67,14 @@
             ></activity>
 
         <activity
+            android:name=".ui.activity.EditPersonInfoActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            ></activity>
+
+
+
+        <activity
             android:name=".view.ClipImageActivity"
             ></activity>
 
