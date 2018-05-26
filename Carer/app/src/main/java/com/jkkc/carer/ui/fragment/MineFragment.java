@@ -18,6 +18,8 @@ import com.jkkc.carer.ui.activity.PersonalInfoActivity;
 import com.jkkc.carer.utils.AppManager;
 import com.tencent.bugly.beta.Beta;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 /**
  * Created by Guan on 2018/5/24.
  */
@@ -61,8 +63,33 @@ public class MineFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                AppManager.getAppManager().finishAllActivity();
-                startActivity(new Intent(getActivity(), LoginActivity.class));
+
+                //退出
+                new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("退出")
+                        .setContentText("")
+                        .setConfirmText("确定")
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                sDialog.dismissWithAnimation();
+
+                                AppManager.getAppManager().finishAllActivity();
+                                startActivity(new Intent(getActivity(), LoginActivity.class));
+
+                            }
+                        })
+                        .setCancelText("取消")
+                        .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                sDialog.cancel();
+
+
+                            }
+                        })
+                        .show();
+
 
             }
         });
