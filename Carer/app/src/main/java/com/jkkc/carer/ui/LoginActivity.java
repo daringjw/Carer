@@ -4,17 +4,22 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.jkkc.carer.Common.Constants;
 import com.jkkc.carer.R;
+import com.jkkc.carer.utils.PhoneFormatCheckUtils;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
-import cn.jpush.android.api.JPushInterface;
 import kr.co.namee.permissiongen.PermissionFail;
 import kr.co.namee.permissiongen.PermissionGen;
 import kr.co.namee.permissiongen.PermissionSuccess;
@@ -27,6 +32,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG1 = LoginActivity.class.getSimpleName();
     private ImageView mBtnLogin;
+    private TextInputEditText mTieAccount;
+    private TextInputEditText mTiePwd;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,6 +44,8 @@ public class LoginActivity extends AppCompatActivity {
 //        AppManager.getAppManager().addActivity(this);
 
         mBtnLogin = (ImageView) findViewById(R.id.btnLogin);
+        mTieAccount = (TextInputEditText) findViewById(R.id.tieAccount);
+        mTiePwd = (TextInputEditText) findViewById(R.id.tiePwd);
 
 
         PermissionGen.with(this)
@@ -52,9 +61,6 @@ public class LoginActivity extends AppCompatActivity {
 
         TextView tvVersion = (TextView) findViewById(R.id.tvVersion);
         tvVersion.setText("版本号：" + AppUtils.getAppVersionName() + AppUtils.getAppVersionCode());
-
-        String registrationID = JPushInterface.getRegistrationID(this);
-        Log.d(TAG1, "registrationID=" + registrationID);
 
 
     }
@@ -79,8 +85,54 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                //login
+                String account = mTieAccount.getText().toString();
+                String pwd = mTiePwd.getText().toString();
+
+                if (!TextUtils.isEmpty(account) && !TextUtils.isEmpty(pwd)) {
+                    //都不为空
+                    if (PhoneFormatCheckUtils.isMobile(account)) {
+                        //手机号，可以登录
+                        OkGo.<String>get(Constants.login)
+                                .tag(this)
+                                .params("phoneNum", account)
+                                .params("password", pwd)
+                                .execute(new StringCallback() {
+                                    @Override
+                                    public void onSuccess(Response<String> response) {
+
+                                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                                        startActivity(intent);
+                                        finish();
+
+                                    }
+
+                                    @Override
+                                    public void onError(Response<String> response) {
+                                        super.onError(response);
+
+                                        ToastUtils.showShort("服务器开小差了");
+
+                                    }
+                                });
+
+
+                    } else {
+                        //非手机号
+                        ToastUtils.showShort("请输入正确手机号");
+
+                    }
+
+
+                } else {
+
+                    ToastUtils.showShort("账号和密码不能为空");
+                }
+
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(intent);
                 finish();
+
 
 
             }
