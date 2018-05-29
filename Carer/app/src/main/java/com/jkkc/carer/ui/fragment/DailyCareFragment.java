@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.jkkc.carer.R;
+import com.jkkc.carer.ui.activity.AddCareActivity;
 import com.uuzuche.lib_zxing.activity.CaptureActivity;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 
@@ -23,6 +24,7 @@ public class DailyCareFragment extends Fragment {
 
     private static final int REQUEST_CODE = 100;
     private static final String TAG1 = DailyCareFragment.class.getSimpleName();
+    private static final int ADD_CARE = 101;
 
     @Nullable
     @Override
@@ -62,12 +64,24 @@ public class DailyCareFragment extends Fragment {
                 if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
                     String result = bundle.getString(CodeUtils.RESULT_STRING);
                     Log.d(TAG1,"解析结果:"+result);
-                    ToastUtils.showShort("解析结果:"+result);
+//                    ToastUtils.showShort("解析结果:"+result);
+                    //扫描成功，添加护理，跳转添加护理界面
+                    Intent intent = new Intent(getActivity(), AddCareActivity.class);
+                    intent.putExtra("result",result);
+                    startActivityForResult(intent,ADD_CARE);
+
 
                 } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
                     ToastUtils.showShort("解析二维码失败");
                 }
             }
+        }else if (requestCode == ADD_CARE){
+
+            //添加护理后，提交服务器后的结果
+            //刷新当前界面，访问服务器数据
+
+
+
         }
 
 

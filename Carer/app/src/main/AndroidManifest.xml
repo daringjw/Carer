@@ -48,14 +48,14 @@
     <uses-permission android:name="android.permission.GET_TASKS"/>
 
     <application
-        tools:replace="android:icon"
         android:name=".Common.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/carer_logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/carer_logo"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:icon">
 
         <activity
             android:name="com.tencent.bugly.beta.ui.BetaActivity"
@@ -97,6 +97,12 @@
 
         <activity
             android:name=".ui.activity.EditPersonInfoActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            ></activity>
+
+        <activity
+            android:name=".ui.activity.AddCareActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             ></activity>
@@ -253,9 +259,9 @@
             android:value="developer-default"/>
         <!-- Required. AppKey copied from Portal -->
         <meta-data
-            tools:replace="android:value"
             android:name="JPUSH_APPKEY"
-            android:value="ba72caa260d431f6248abbe8"/>
+            android:value="ba72caa260d431f6248abbe8"
+            tools:replace="android:value"/>
 
     </application>
 
