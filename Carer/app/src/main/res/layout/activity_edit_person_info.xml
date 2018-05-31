@@ -26,7 +26,7 @@
             android:textSize="20sp"/>
 
         <TextView
-            android:id="@+id/tvEdit"
+            android:id="@+id/tvSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
             android:layout_weight="1"
-            android:text="张三"/>
+            android:text="王位"/>
 
     </LinearLayout>
 
@@ -110,7 +110,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="年龄"/>
+            android:text="出生日期"/>
 
         <EditText
             android:id="@+id/etAge"

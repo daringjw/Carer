@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +12,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.AppUtils;
+import com.google.gson.Gson;
+import com.jkkc.carer.Common.Constants;
 import com.jkkc.carer.R;
+import com.jkkc.carer.bean.LoginBean;
 import com.jkkc.carer.ui.LoginActivity;
 import com.jkkc.carer.ui.activity.ModifyPwdActivity;
 import com.jkkc.carer.ui.activity.PersonalInfoActivity;
 import com.jkkc.carer.utils.AppManager;
 import com.jkkc.carer.utils.PrefUtils;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 import com.tencent.bugly.beta.Beta;
 
 import cn.jpush.android.api.JPushInterface;
@@ -28,10 +35,17 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class MineFragment extends Fragment {
 
+    private static final String TAG1 = MineFragment.class.getSimpleName();
+    LoginBean mLoginBean;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
+        String result = PrefUtils.getString(getActivity(), "loginBean", null);
+        Gson gson = new Gson();
+        mLoginBean = gson.fromJson(result, LoginBean.class);
 
         View view = View.inflate(getActivity(), R.layout.fragment_mine, null);
 
@@ -117,9 +131,15 @@ public class MineFragment extends Fragment {
         });
 
 
+
+
+
+
         return view;
 
     }
+
+
 
 
 }

@@ -34,9 +34,11 @@
         android:layout_marginTop="20dp">
 
         <android.support.design.widget.TextInputEditText
+            android:id="@+id/tieOldPwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="原密码"
+            android:inputType="textPassword"
             android:singleLine="true"/>
 
 
@@ -47,9 +49,11 @@
         android:layout_height="wrap_content">
 
         <android.support.design.widget.TextInputEditText
+            android:id="@+id/tieNewPwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="新密码"
+            android:inputType="textPassword"
             android:singleLine="true"/>
 
 
@@ -60,9 +64,11 @@
         android:layout_height="wrap_content">
 
         <android.support.design.widget.TextInputEditText
+            android:id="@+id/tieConfirmPwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="确认密码"
+            android:inputType="textPassword"
             android:singleLine="true"/>
 
 

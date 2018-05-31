@@ -25,11 +25,19 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.jkkc.carer.BuildConfig;
+import com.jkkc.carer.Common.Constants;
 import com.jkkc.carer.R;
+import com.jkkc.carer.bean.LoginBean;
+import com.jkkc.carer.bean.WorkerBaseInfo;
 import com.jkkc.carer.utils.FileUtil;
+import com.jkkc.carer.utils.PrefUtils;
 import com.jkkc.carer.view.CircleImageView;
 import com.jkkc.carer.view.ClipImageActivity;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 import java.io.File;
 
@@ -52,6 +60,11 @@ public class PersonalInfoActivity extends AppCompatActivity {
     private static final int READ_EXTERNAL_STORAGE_REQUEST_CODE = 103;
     //请求写入外部存储
     private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 104;
+
+
+    private static final String TAG1 = PersonalInfoActivity.class.getSimpleName();
+
+
     //头像1
     private CircleImageView headImage1;
     //头像2
@@ -62,11 +75,22 @@ public class PersonalInfoActivity extends AppCompatActivity {
     private int type;
 
     // 编辑个人信息结果
-    private static final int Edit_result= 105;
+    private static final int Edit_result = 105;
+
+    LoginBean mLoginBean;
+    private TextView mTvName;
+    private TextView mTvSex;
+    private TextView mTvAge;
+    private TextView mTvPhone;
+    private TextView mTvHomeAddress;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        String result = PrefUtils.getString(this, "loginBean", null);
+        Gson gson = new Gson();
+        mLoginBean = gson.fromJson(result, LoginBean.class);
 
         setContentView(R.layout.activity_personal_info);
 
@@ -76,7 +100,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent intent = new Intent(getApplicationContext(), EditPersonInfoActivity.class);
-                startActivityForResult(intent,Edit_result);
+                startActivityForResult(intent, Edit_result);
 
             }
         });
@@ -105,6 +129,44 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
             }
         });
+
+
+        mTvName = (TextView) findViewById(R.id.tvName);
+        mTvSex = (TextView) findViewById(R.id.tvSex);
+        mTvAge = (TextView) findViewById(R.id.tvAge);
+        mTvPhone = (TextView) findViewById(R.id.tvPhone);
+        mTvHomeAddress = (TextView) findViewById(R.id.tvHomeAddress);
+
+
+        //获取个人信息
+        OkGo.<String>get(Constants.getCare)
+                .tag(this)
+                .params("token", mLoginBean.getToken())
+                .params("peopleId", mLoginBean.getPeopleId())
+                .params("phoneNum", mLoginBean.getPhoneNum())
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+
+                        String result = response.body().toString();
+                        Gson gson1 = new Gson();
+                        WorkerBaseInfo workerBaseInfo = gson1.fromJson(result, WorkerBaseInfo.class);
+                        String code = workerBaseInfo.getCode();
+                        if (code.contains("success")) {
+
+                            mTvName.setText(workerBaseInfo.getWorkerBaseInfo().getPeopleName());
+                            mTvSex.setText(workerBaseInfo.getWorkerBaseInfo().getGender());
+                            mTvAge.setText(workerBaseInfo.getWorkerBaseInfo().getBirthday());
+                            mTvPhone.setText(workerBaseInfo.getWorkerBaseInfo().getPhoneNum());
+                            mTvHomeAddress.setText(workerBaseInfo.getWorkerBaseInfo().getAddressCity()
+                                    + workerBaseInfo.getWorkerBaseInfo().getAddressCounty()
+                                    + workerBaseInfo.getWorkerBaseInfo().getAddressDetail());
+
+                        }
+
+
+                    }
+                });
 
 
     }
@@ -217,6 +279,44 @@ public class PersonalInfoActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         switch (requestCode) {
+
+            case Edit_result:
+                if (resultCode == RESULT_OK) {
+
+                    //刷新数据
+                    //获取个人信息
+                    OkGo.<String>get(Constants.getCare)
+                            .tag(this)
+                            .params("token", mLoginBean.getToken())
+                            .params("peopleId", mLoginBean.getPeopleId())
+                            .params("phoneNum", mLoginBean.getPhoneNum())
+                            .execute(new StringCallback() {
+                                @Override
+                                public void onSuccess(Response<String> response) {
+
+                                    String result = response.body().toString();
+                                    Gson gson1 = new Gson();
+                                    WorkerBaseInfo workerBaseInfo = gson1.fromJson(result, WorkerBaseInfo.class);
+                                    String code = workerBaseInfo.getCode();
+                                    if (code.contains("success")) {
+
+                                        mTvName.setText(workerBaseInfo.getWorkerBaseInfo().getPeopleName());
+                                        mTvSex.setText(workerBaseInfo.getWorkerBaseInfo().getGender());
+                                        mTvAge.setText(workerBaseInfo.getWorkerBaseInfo().getBirthday());
+                                        mTvPhone.setText(workerBaseInfo.getWorkerBaseInfo().getPhoneNum());
+                                        mTvHomeAddress.setText(workerBaseInfo.getWorkerBaseInfo().getAddressCity()
+                                                + workerBaseInfo.getWorkerBaseInfo().getAddressCounty()
+                                                + workerBaseInfo.getWorkerBaseInfo().getAddressDetail());
+
+                                    }
+
+
+                                }
+                            });
+
+                }
+                break;
+
             case REQUEST_CAPTURE: //调用系统相机返回
                 if (resultCode == RESULT_OK) {
                     gotoClipActivity(Uri.fromFile(tempFile));
@@ -243,6 +343,33 @@ public class PersonalInfoActivity extends AppCompatActivity {
                     }
                     //此处后面可以将bitMap转为二进制上传后台网络
                     //......
+                    File file = new File(cropImagePath);
+
+
+                    Log.d(TAG1, "token=" + mLoginBean.getToken());
+                    Log.d(TAG1, "peopleId=" + mLoginBean.getPeopleId());
+                    Log.d(TAG1, "phoneNum=" + mLoginBean.getPhoneNum());
+                    Log.d(TAG1, file.exists() + ",path=" + file.getAbsolutePath());
+
+                    //上传头像
+                    OkGo.<String>post(Constants.headImgUrl)
+                            .tag(this)
+                            .params("token", mLoginBean.getToken())
+                            .params("peopleId", mLoginBean.getPeopleId())
+                            .params("phoneNum", mLoginBean.getPhoneNum())
+                            .params("uploadFile", file)
+                            .execute(new StringCallback() {
+                                @Override
+                                public void onSuccess(Response<String> response) {
+
+                                    String result = response.body().toString();
+                                    Log.d(TAG1, "result=" + result);
+
+
+                                }
+                            });
+
+
                 }
 
                 break;
