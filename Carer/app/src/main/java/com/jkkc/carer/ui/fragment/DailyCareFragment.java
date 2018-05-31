@@ -46,6 +46,32 @@ public class DailyCareFragment extends Fragment {
         });
 
 
+        /*JSONArray jsonArray = new JSONArray();
+        JSONObject js = new JSONObject();
+        IdBean p = new IdBean("123", "321");
+
+        JSONObject js1 = new JSONObject();
+        IdBean p1 = new IdBean("1234", "4321");
+
+        try {
+            js.put("olderId", p.olderId);
+            js.put("nurserId", p.nurserId);
+            js1.put("olderId", p1.olderId);
+            js1.put("nurserId", p1.nurserId);
+
+            jsonArray.put(js);
+            jsonArray.put(js1);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        // 把Json数据转换成String类型，使用输出流向服务器写
+        final String content = String.valueOf(jsonArray);
+        Log.d(TAG1, "content=" + content);*/
+
+
+
+
+
         return view;
 
     }
@@ -63,23 +89,22 @@ public class DailyCareFragment extends Fragment {
                 }
                 if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
                     String result = bundle.getString(CodeUtils.RESULT_STRING);
-                    Log.d(TAG1,"解析结果:"+result);
+                    Log.d(TAG1, "解析结果:" + result);
 //                    ToastUtils.showShort("解析结果:"+result);
                     //扫描成功，添加护理，跳转添加护理界面
                     Intent intent = new Intent(getActivity(), AddCareActivity.class);
-                    intent.putExtra("result",result);
-                    startActivityForResult(intent,ADD_CARE);
+                    intent.putExtra("result", result);
+                    startActivityForResult(intent, ADD_CARE);
 
 
                 } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
                     ToastUtils.showShort("解析二维码失败");
                 }
             }
-        }else if (requestCode == ADD_CARE){
+        } else if (requestCode == ADD_CARE) {
 
             //添加护理后，提交服务器后的结果
             //刷新当前界面，访问服务器数据
-
 
 
         }

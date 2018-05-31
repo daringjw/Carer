@@ -13,13 +13,17 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.google.gson.Gson;
 import com.jkkc.carer.Common.Constants;
 import com.jkkc.carer.R;
+import com.jkkc.carer.bean.LoginBean;
 import com.jkkc.carer.utils.PhoneFormatCheckUtils;
+import com.jkkc.carer.utils.PrefUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 
+import cn.jpush.android.api.JPushInterface;
 import kr.co.namee.permissiongen.PermissionFail;
 import kr.co.namee.permissiongen.PermissionGen;
 import kr.co.namee.permissiongen.PermissionSuccess;
@@ -47,6 +51,13 @@ public class LoginActivity extends AppCompatActivity {
         mTieAccount = (TextInputEditText) findViewById(R.id.tieAccount);
         mTiePwd = (TextInputEditText) findViewById(R.id.tiePwd);
 
+        String account = PrefUtils.getString(getApplicationContext(), "account", null);
+        if (!TextUtils.isEmpty(account)) {
+
+            mTieAccount.setText(account);
+
+        }
+
 
         PermissionGen.with(this)
                 .addRequestCode(100)
@@ -61,6 +72,8 @@ public class LoginActivity extends AppCompatActivity {
 
         TextView tvVersion = (TextView) findViewById(R.id.tvVersion);
         tvVersion.setText("版本号：" + AppUtils.getAppVersionName() + AppUtils.getAppVersionCode());
+
+
 
 
     }
@@ -86,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
                 //login
-                String account = mTieAccount.getText().toString();
+                final String account = mTieAccount.getText().toString();
                 String pwd = mTiePwd.getText().toString();
 
                 if (!TextUtils.isEmpty(account) && !TextUtils.isEmpty(pwd)) {
@@ -97,13 +110,32 @@ public class LoginActivity extends AppCompatActivity {
                                 .tag(this)
                                 .params("phoneNum", account)
                                 .params("password", pwd)
+                                .params("registerId", JPushInterface.getRegistrationID(LoginActivity.this))
                                 .execute(new StringCallback() {
                                     @Override
                                     public void onSuccess(Response<String> response) {
 
-                                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                                        startActivity(intent);
-                                        finish();
+
+                                        String result = response.body().toString();
+                                        Gson gson = new Gson();
+                                        LoginBean loginBean = gson.fromJson(result, LoginBean.class);
+                                        String msg = loginBean.getMsg();
+                                        if (msg.contains("登录成功")) {
+
+                                            //恢复极光推送
+                                            JPushInterface.resumePush(getApplicationContext());
+                                            //保存信息
+                                            PrefUtils.setString(getApplicationContext(), "loginBean", result);
+                                            PrefUtils.setBoolean(getApplicationContext(), "loginState", true);
+                                            //保存账号
+                                            PrefUtils.setString(getApplicationContext(), "account", account);
+
+                                            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                                            startActivity(intent);
+                                            finish();
+
+                                        }
+
 
                                     }
 
@@ -128,11 +160,6 @@ public class LoginActivity extends AppCompatActivity {
 
                     ToastUtils.showShort("账号和密码不能为空");
                 }
-
-                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                startActivity(intent);
-                finish();
-
 
 
             }

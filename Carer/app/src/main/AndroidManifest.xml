@@ -260,7 +260,7 @@
         <!-- Required. AppKey copied from Portal -->
         <meta-data
             android:name="JPUSH_APPKEY"
-            android:value="ba72caa260d431f6248abbe8"
+            android:value="890f7284cc005e22159f4c94"
             tools:replace="android:value"/>
 
     </application>

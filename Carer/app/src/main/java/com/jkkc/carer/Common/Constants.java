@@ -13,7 +13,7 @@ public class Constants {
 
 
     //baseUrl
-    public static final String BASE_URL = "http://" + IP + PORT;
+    public static final String BASE_URL = "http://" + IP + PORT +"/igim";
     //登录
     public static final String login = BASE_URL + "/mobileLogin/login.do";
     //修改密码
@@ -24,6 +24,8 @@ public class Constants {
     public static final String updCare = BASE_URL + "/careManage/updCare.do";
     //获取个人信息
     public static final String getCare = BASE_URL + "/careManage/getCare.do";
+    //6.添加护理信息
+    public static final String addDailyNursingInfo = BASE_URL + "careController/addDailyNursingInfo.do";
 
 
 

@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
+import com.jkkc.carer.ui.HomeActivity;
 import com.jkkc.carer.ui.LoginActivity;
+import com.jkkc.carer.utils.PrefUtils;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -17,7 +19,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        if (handler==null){
+        if (handler == null) {
             handler = new Handler();
         }
 
@@ -26,14 +28,25 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void run() {
-                Intent intent = new Intent(SplashActivity.this,
-                        LoginActivity.class);
-                startActivity(intent);
-                SplashActivity.this.finish();
+
+                //sp获取登录状态的boolean value
+                boolean loginState = PrefUtils.getBoolean(getApplicationContext(), "loginState", false);
+                if (loginState) {
+                    //已经登录
+                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                    finish();
+                } else {
+                    //未登录
+                    Intent intent = new Intent(SplashActivity.this,
+                            LoginActivity.class);
+                    startActivity(intent);
+                    SplashActivity.this.finish();
+
+                }
+
+
             }
         }, SPLASH_DISPLAY_LENGHT);
-
-
 
 
     }

@@ -16,8 +16,10 @@ import com.jkkc.carer.ui.LoginActivity;
 import com.jkkc.carer.ui.activity.ModifyPwdActivity;
 import com.jkkc.carer.ui.activity.PersonalInfoActivity;
 import com.jkkc.carer.utils.AppManager;
+import com.jkkc.carer.utils.PrefUtils;
 import com.tencent.bugly.beta.Beta;
 
+import cn.jpush.android.api.JPushInterface;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
@@ -73,6 +75,12 @@ public class MineFragment extends Fragment {
                             @Override
                             public void onClick(SweetAlertDialog sDialog) {
                                 sDialog.dismissWithAnimation();
+
+                                //停止极光推送
+                                JPushInterface.stopPush(getActivity());
+                                //登录状态变为false
+                                PrefUtils.setBoolean(getActivity(),"loginState",false);
+
 
                                 AppManager.getAppManager().finishAllActivity();
                                 startActivity(new Intent(getActivity(), LoginActivity.class));
