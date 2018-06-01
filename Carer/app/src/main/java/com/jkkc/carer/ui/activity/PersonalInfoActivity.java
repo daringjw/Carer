@@ -272,7 +272,11 @@ public class PersonalInfoActivity extends AppCompatActivity {
         } else {
             intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(tempFile));
         }
-        startActivityForResult(intent, REQUEST_CAPTURE);
+
+        startActivityForResult(intent,
+                REQUEST_CAPTURE);
+
+
     }
 
 
@@ -304,7 +308,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
                                         mTvSex.setText(workerBaseInfo.getWorkerBaseInfo().getGender());
                                         mTvAge.setText(workerBaseInfo.getWorkerBaseInfo().getBirthday());
                                         mTvPhone.setText(workerBaseInfo.getWorkerBaseInfo().getPhoneNum());
-                                        mTvHomeAddress.setText(workerBaseInfo.getWorkerBaseInfo().getAddressCity()
+                                        mTvHomeAddress.setText(
+                                                workerBaseInfo.getWorkerBaseInfo().getAddressCity()
                                                 + workerBaseInfo.getWorkerBaseInfo().getAddressCounty()
                                                 + workerBaseInfo.getWorkerBaseInfo().getAddressDetail());
 

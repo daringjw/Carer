@@ -77,4 +77,61 @@
 
     </LinearLayout>
 
+
+    <LinearLayout
+        android:id="@+id/llCareProject"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:text="护理\n内容"/>
+
+        <TextView
+            android:id="@+id/tvCareProject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="老人id:123;护士id:321;护理项目：喂药"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnCommit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="提交"
+            />
+
+        <Button
+            android:id="@+id/btnAddProject"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="继续添加项目"
+            />
+
+        <Button
+            android:id="@+id/btnAddOldMan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="继续添加老人"
+            />
+
+    </LinearLayout>
+
 </LinearLayout>

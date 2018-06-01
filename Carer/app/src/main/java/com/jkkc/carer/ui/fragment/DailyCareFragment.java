@@ -46,27 +46,7 @@ public class DailyCareFragment extends Fragment {
         });
 
 
-        /*JSONArray jsonArray = new JSONArray();
-        JSONObject js = new JSONObject();
-        IdBean p = new IdBean("123", "321");
 
-        JSONObject js1 = new JSONObject();
-        IdBean p1 = new IdBean("1234", "4321");
-
-        try {
-            js.put("olderId", p.olderId);
-            js.put("nurserId", p.nurserId);
-            js1.put("olderId", p1.olderId);
-            js1.put("nurserId", p1.nurserId);
-
-            jsonArray.put(js);
-            jsonArray.put(js1);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        // 把Json数据转换成String类型，使用输出流向服务器写
-        final String content = String.valueOf(jsonArray);
-        Log.d(TAG1, "content=" + content);*/
 
 
 
