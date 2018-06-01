@@ -15,26 +15,31 @@
 
 
         <RadioButton
+            android:id="@+id/rbTiWen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="体温检测"/>
 
         <RadioButton
+            android:id="@+id/rbXueYa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="血压检测"/>
 
         <RadioButton
+            android:id="@+id/rbMaiBo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="脉搏检测"/>
 
         <RadioButton
+            android:id="@+id/rbHuXi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="呼吸检测"/>
 
         <RadioButton
+            android:id="@+id/rbNiaoLiang"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="尿量检测"/>

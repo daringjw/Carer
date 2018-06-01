@@ -38,7 +38,7 @@ import org.json.JSONObject;
  * Created by Guan on 2018/5/29.
  */
 
-public class AddCareActivity extends AppCompatActivity {
+public class AddCareActivity extends AppCompatActivity implements HealthCheckFragment.CallBackValue {
 
     private static final int REQUEST_CODE = 100;
     private static final String TAG1 = AddCareActivity.class.getSimpleName();
@@ -115,9 +115,6 @@ public class AddCareActivity extends AppCompatActivity {
         });
 
 
-
-
-
     }
 
 
@@ -158,6 +155,14 @@ public class AddCareActivity extends AppCompatActivity {
                 }
             }
         }
+
+
+    }
+
+    @Override
+    public void SendMessageValue(String strValue) {
+
+        mTvCareProject.setText("护理项目：" + strValue);
 
 
     }
