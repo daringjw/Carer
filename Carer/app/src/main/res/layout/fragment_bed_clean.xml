@@ -15,26 +15,31 @@
 
 
         <RadioButton
+            android:id="@+id/rbHuanChuangDan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="换床单"/>
 
         <RadioButton
+            android:id="@+id/rbHuanBeiRu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="换被褥"/>
 
         <RadioButton
+            android:id="@+id/rbYuesuYi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="约束衣"/>
 
         <RadioButton
+            android:id="@+id/rbYuesuDai"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="约束带"/>
 
         <RadioButton
+            android:id="@+id/rbYuesuShouTaoClean"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="约束手套清洗"/>

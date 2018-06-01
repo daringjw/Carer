@@ -15,21 +15,22 @@
 
 
         <RadioButton
+            android:id="@+id/rbThreeMealsReservation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="三餐餐食预定"/>
 
         <RadioButton
+            android:id="@+id/rbChuangQianJiuCan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="床前就餐"/>
 
         <RadioButton
+            android:id="@+id/rbFuYao"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="服药"/>
-
-
 
 
     </RadioGroup>
