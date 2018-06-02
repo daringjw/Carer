@@ -10,22 +10,32 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.SparseArray;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
+import com.jkkc.carer.Common.Constants;
 import com.jkkc.carer.R;
 import com.jkkc.carer.bean.IdBean;
+import com.jkkc.carer.bean.LoginBean;
 import com.jkkc.carer.ui.fragment.BedCleanFragment;
 import com.jkkc.carer.ui.fragment.DietMedicineFragment;
 import com.jkkc.carer.ui.fragment.HealthCheckFragment;
 import com.jkkc.carer.ui.fragment.PersonalCleanFragment;
 import com.jkkc.carer.ui.fragment.SpecialCareFragment;
+import com.jkkc.carer.utils.PrefUtils;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 import com.uuzuche.lib_zxing.activity.CaptureActivity;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 
@@ -58,12 +68,19 @@ public class AddCareActivity extends AppCompatActivity
     private static final int REQUEST_CODE = 100;
     private static final String TAG1 = AddCareActivity.class.getSimpleName();
     private JSONArray mJsonArray;
-    private TextView mTvCareProject;
+
     private List<IdBean> mIdBeanList;
     private IdBean mIdBean;
 
     private IdBean mIdBean1;
 
+
+    RecyclerView mRecyclerView;
+    LinearLayoutManager mLayoutManager;
+    MyAdapter mAdapter;
+    private String mContent2;
+
+    LoginBean mLoginBean;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,7 +88,9 @@ public class AddCareActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_add_care);
 
-        mTvCareProject = (TextView) findViewById(R.id.tvCareProject);
+        final String resultx = PrefUtils.getString(this, "loginBean", null);
+        Gson gsonx = new Gson();
+        mLoginBean = gsonx.fromJson(resultx, LoginBean.class);
 
         //Fragment+ViewPager+FragmentViewPager组合的使用
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
@@ -104,7 +123,6 @@ public class AddCareActivity extends AppCompatActivity
         mIdBean.careProject = careName;
 
 
-
         Button btnAddProject = (Button) findViewById(R.id.btnAddProject);
 
         btnAddProject.setOnClickListener(new View.OnClickListener() {
@@ -121,18 +139,33 @@ public class AddCareActivity extends AppCompatActivity
                     mIdBeanList = new ArrayList<>();
                     mIdBeanList.add(mIdBean);
 
-                }else {
+                } else if (mIdBean1 != null) {
 
-                    mIdBean1.careProject =careName;
+                    mIdBean1.careProject = careName;
                     mIdBeanList.add(mIdBean1);
+                    mIdBean1 = null;
+
+                } else {
+
+                    ToastUtils.showShort("请继续添加老人");
 
                 }
 
-                for (IdBean idBean : mIdBeanList){
-                  Log.d(TAG1,"careProject="+idBean.careProject);
+
+                for (IdBean idBean : mIdBeanList) {
+                    Log.d(TAG1, "careProject=" + idBean.careProject);
                 }
 
-
+                //添加后，界面显示recyclerview
+                mRecyclerView = (RecyclerView) findViewById(R.id.rvCareProject);
+//创建默认的线性LayoutManager
+                mLayoutManager = new LinearLayoutManager(AddCareActivity.this);
+                mRecyclerView.setLayoutManager(mLayoutManager);
+//如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
+                mRecyclerView.setHasFixedSize(true);
+//创建并设置Adapter
+                mAdapter = new MyAdapter(mIdBeanList);
+                mRecyclerView.setAdapter(mAdapter);
 
 
             }
@@ -151,8 +184,8 @@ public class AddCareActivity extends AppCompatActivity
         mJsonArray.put(jsonObject);
 
         // 把Json数据转换成String类型，使用输出流向服务器写
-        String content = String.valueOf(mJsonArray);
-        Log.d(TAG1, "content=" + content);
+        mContent2 = String.valueOf(mJsonArray);
+        Log.d(TAG1, "content=" + mContent2);
 
 
 //        mTvCareProject.setText(content);
@@ -171,8 +204,95 @@ public class AddCareActivity extends AppCompatActivity
         });
 
 
+        //提交
+        Button btnCommit = (Button) findViewById(R.id.btnCommit);
+        btnCommit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Log.d(TAG1, "mContent2=" + mContent2);
+                OkGo.<String>get(Constants.addDailyNursingInfo)
+                        .tag(this)
+                        .params("token", mLoginBean.getToken())
+                        .params("peopleId", mLoginBean.getPeopleId())
+                        .params("phoneNum", mLoginBean.getPhoneNum())
+                        .params("nursingJson", mContent2)
+                        .execute(new StringCallback() {
+                            @Override
+                            public void onSuccess(Response<String> response) {
+
+                                String result = response.body().toString();
+                                Log.d(TAG1,"result="+result);
+
+                            }
+
+                            @Override
+                            public void onError(Response<String> response) {
+                                super.onError(response);
+
+                                ToastUtils.showShort("抱歉，服务器开小差了");
+
+
+                            }
+                        });
+
+
+            }
+        });
+
+
     }
 
+    private String[] getDummyDatas() {
+
+        String[] a = {"北京", "上海", "广东", "深圳"};
+        return a;
+
+    }
+
+
+    public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
+
+        public List<IdBean> datas = null;
+
+        public MyAdapter(List<IdBean> datas) {
+            this.datas = datas;
+        }
+
+        //创建新View，被LayoutManager所调用
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_care_project, viewGroup, false);
+            ViewHolder vh = new ViewHolder(view);
+            return vh;
+        }
+
+        //将数据与界面进行绑定的操作
+        @Override
+        public void onBindViewHolder(ViewHolder viewHolder, int position) {
+
+            viewHolder.mTextView.setText("老人id:" + datas.get(position).olderId + "  ;  "
+                    + "护理项目：" + datas.get(position).careProject);
+
+
+        }
+
+        //获取数据的数量
+        @Override
+        public int getItemCount() {
+            return datas.size();
+        }
+
+        //自定义的ViewHolder，持有每个Item的的所有界面元素
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            public TextView mTextView;
+
+            public ViewHolder(View view) {
+                super(view);
+                mTextView = (TextView) view.findViewById(R.id.tvCareProject);
+            }
+        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -192,8 +312,7 @@ public class AddCareActivity extends AppCompatActivity
                     //扫描成功，添加护理，
                     Gson gson = new Gson();
                     mIdBean1 = gson.fromJson(result, IdBean.class);
-
-
+//                    mIdBean1.careProject = careName;
 
 
                     JSONObject jsonObject = new JSONObject();
@@ -205,9 +324,11 @@ public class AddCareActivity extends AppCompatActivity
                     }
 
                     mJsonArray.put(jsonObject);
-                    String content2 = String.valueOf(mJsonArray);
-                    Log.d(TAG1, "content2=" + content2);
-                    mTvCareProject.setText(content2);
+
+                    mContent2 = String.valueOf(mJsonArray);
+
+
+                    Log.d(TAG1, "content2=" + mContent2);
 
 
                 } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
