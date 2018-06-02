@@ -33,6 +33,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * Created by Guan on 2018/5/29.
@@ -40,9 +43,9 @@ import org.json.JSONObject;
 
 /**
  * {
- "olderId": "122",
- "nurserId": "321"
- }
+ * "olderId": "122",
+ * "nurserId": "321"
+ * }
  */
 
 public class AddCareActivity extends AppCompatActivity
@@ -56,6 +59,10 @@ public class AddCareActivity extends AppCompatActivity
     private static final String TAG1 = AddCareActivity.class.getSimpleName();
     private JSONArray mJsonArray;
     private TextView mTvCareProject;
+    private List<IdBean> mIdBeanList;
+    private IdBean mIdBean;
+
+    private IdBean mIdBean1;
 
 
     @Override
@@ -91,15 +98,51 @@ public class AddCareActivity extends AppCompatActivity
 
         Intent intent = getIntent();
         String result = intent.getStringExtra("result");
-        Log.d(TAG1, "result=" + result);
+
         Gson gson = new Gson();
-        IdBean idBean = gson.fromJson(result, IdBean.class);
+        mIdBean = gson.fromJson(result, IdBean.class);
+        mIdBean.careProject = careName;
+
+
+
+        Button btnAddProject = (Button) findViewById(R.id.btnAddProject);
+
+        btnAddProject.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //添加护理项目
+                if (mIdBeanList == null) {
+
+                    Intent intent = getIntent();
+                    String result = intent.getStringExtra("result");
+                    Gson gson = new Gson();
+                    mIdBean = gson.fromJson(result, IdBean.class);
+                    mIdBean.careProject = careName;
+                    mIdBeanList = new ArrayList<>();
+                    mIdBeanList.add(mIdBean);
+
+                }else {
+
+                    mIdBean1.careProject =careName;
+                    mIdBeanList.add(mIdBean1);
+
+                }
+
+                for (IdBean idBean : mIdBeanList){
+                  Log.d(TAG1,"careProject="+idBean.careProject);
+                }
+
+
+
+
+            }
+        });
 
 
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("olderId", idBean.olderId);
-            jsonObject.put("nurserId", idBean.nurserId);
+            jsonObject.put("olderId", mIdBean.olderId);
+            jsonObject.put("nurserId", mIdBean.nurserId);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -111,7 +154,8 @@ public class AddCareActivity extends AppCompatActivity
         String content = String.valueOf(mJsonArray);
         Log.d(TAG1, "content=" + content);
 
-        mTvCareProject.setText(content);
+
+//        mTvCareProject.setText(content);
 
 
         Button btnAddOldMan = (Button) findViewById(R.id.btnAddOldMan);
@@ -147,11 +191,15 @@ public class AddCareActivity extends AppCompatActivity
 //                    ToastUtils.showShort("解析结果:"+result);
                     //扫描成功，添加护理，
                     Gson gson = new Gson();
-                    IdBean idBean = gson.fromJson(result, IdBean.class);
+                    mIdBean1 = gson.fromJson(result, IdBean.class);
+
+
+
+
                     JSONObject jsonObject = new JSONObject();
                     try {
-                        jsonObject.put("olderId", idBean.olderId);
-                        jsonObject.put("nurserId", idBean.nurserId);
+                        jsonObject.put("olderId", mIdBean1.olderId);
+                        jsonObject.put("nurserId", mIdBean1.nurserId);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -171,10 +219,13 @@ public class AddCareActivity extends AppCompatActivity
 
     }
 
+    String careName;
+
     @Override
     public void SendMessageValue(String strValue) {
 
-        mTvCareProject.setText("护理项目：" + strValue);
+//        mTvCareProject.setText("护理项目：" + strValue);
+        careName = strValue;
 
 
     }

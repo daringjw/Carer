@@ -8,12 +8,7 @@ public class IdBean {
 
     public String olderId;
     public String nurserId;
+    public String careProject;
 
-    public IdBean() {
-    }
 
-    public IdBean(String olderId, String nurserId) {
-        this.olderId = olderId;
-        this.nurserId = nurserId;
-    }
 }
