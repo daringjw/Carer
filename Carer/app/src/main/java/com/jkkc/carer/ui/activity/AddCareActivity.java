@@ -38,10 +38,19 @@ import org.json.JSONObject;
  * Created by Guan on 2018/5/29.
  */
 
+/**
+ * {
+ "olderId": "122",
+ "nurserId": "321"
+ }
+ */
+
 public class AddCareActivity extends AppCompatActivity
         implements HealthCheckFragment.CallBackValue,
         BedCleanFragment.CallBackValue,
-        DietMedicineFragment.CallBackValue {
+        DietMedicineFragment.CallBackValue,
+        PersonalCleanFragment.CallBackValue,
+        SpecialCareFragment.CallBackValue {
 
     private static final int REQUEST_CODE = 100;
     private static final String TAG1 = AddCareActivity.class.getSimpleName();

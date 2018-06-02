@@ -15,25 +15,28 @@
 
 
         <RadioButton
+            android:id="@+id/rbShuye"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="输液"/>
 
         <RadioButton
+            android:id="@+id/rbXiaodu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="消毒"/>
 
         <RadioButton
+            android:id="@+id/rbXiyang"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="吸氧"/>
 
         <RadioButton
+            android:id="@+id/rbXiezhuzhitihuodong"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="协助肢体活动"/>
-
 
 
     </RadioGroup>

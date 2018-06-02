@@ -15,26 +15,31 @@
 
 
         <RadioButton
+            android:id="@+id/rbCashen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="擦身"/>
 
         <RadioButton
+            android:id="@+id/rbXitou"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="洗头"/>
 
         <RadioButton
+            android:id="@+id/rbXifeet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="洗脚"/>
 
         <RadioButton
+            android:id="@+id/rbFanshen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="翻身"/>
 
         <RadioButton
+            android:id="@+id/rbPee"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="大小便"/>
