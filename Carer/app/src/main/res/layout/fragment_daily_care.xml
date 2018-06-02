@@ -28,4 +28,13 @@
 
     </RelativeLayout>
 
+
+    <TextView
+        android:id="@+id/tvClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="模拟点击加号跳转扫码后的界面"/>
+
 </LinearLayout>

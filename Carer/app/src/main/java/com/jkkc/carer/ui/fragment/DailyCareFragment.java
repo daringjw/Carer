@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.jkkc.carer.R;
@@ -46,10 +47,21 @@ public class DailyCareFragment extends Fragment {
         });
 
 
+        TextView tvClick = (TextView) view.findViewById(R.id.tvClick);
+        tvClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                //扫描成功，添加护理，跳转添加护理界面
+                Intent intent = new Intent(getActivity(), AddCareActivity.class);
+                intent.putExtra("result", "{\n" +
+                        "\"olderId\": \"189\",\n" +
+                        "\"nurserId\": \"365\"\n" +
+                        "}");
+                startActivityForResult(intent, ADD_CARE);
 
-
-
+            }
+        });
 
 
         return view;
