@@ -79,6 +79,7 @@ public class DailyCareFragment extends Fragment {
                 if (bundle == null) {
                     return;
                 }
+
                 if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
                     String result = bundle.getString(CodeUtils.RESULT_STRING);
                     Log.d(TAG1, "解析结果:" + result);
