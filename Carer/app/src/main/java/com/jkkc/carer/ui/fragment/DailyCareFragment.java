@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.jkkc.carer.R;
@@ -26,6 +25,7 @@ public class DailyCareFragment extends Fragment {
     private static final int REQUEST_CODE = 100;
     private static final String TAG1 = DailyCareFragment.class.getSimpleName();
     private static final int ADD_CARE = 101;
+
 
     @Nullable
     @Override
@@ -46,8 +46,8 @@ public class DailyCareFragment extends Fragment {
             }
         });
 
+      /*  TextView tvClick = (TextView) view.findViewById(R.id.tvClick);
 
-        TextView tvClick = (TextView) view.findViewById(R.id.tvClick);
         tvClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,7 +61,8 @@ public class DailyCareFragment extends Fragment {
                 startActivityForResult(intent, ADD_CARE);
 
             }
-        });
+
+        });  */
 
 
         return view;

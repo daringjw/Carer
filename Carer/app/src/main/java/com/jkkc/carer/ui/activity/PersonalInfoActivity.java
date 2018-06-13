@@ -277,6 +277,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 REQUEST_CAPTURE);
 
 
+
+
     }
 
 
