@@ -36,6 +36,7 @@ import com.jkkc.carer.utils.PrefUtils;
 import com.jkkc.carer.view.CircleImageView;
 import com.jkkc.carer.view.ClipImageActivity;
 import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.FileCallback;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 
@@ -143,7 +144,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 .tag(this)
                 .params("token", mLoginBean.getToken())
                 .params("peopleId", mLoginBean.getPeopleId())
-                .params("phoneNum", mLoginBean.getPhoneNum())
+                .params("userAccount", mLoginBean.getUserAccount())
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -161,6 +162,25 @@ public class PersonalInfoActivity extends AppCompatActivity {
                             mTvHomeAddress.setText(workerBaseInfo.getWorkerBaseInfo().getAddressCity()
                                     + workerBaseInfo.getWorkerBaseInfo().getAddressCounty()
                                     + workerBaseInfo.getWorkerBaseInfo().getAddressDetail());
+
+                            String peopleImage = workerBaseInfo.getWorkerBaseInfo().getPeopleImage();
+                            peopleImage = Constants.base_url1 + peopleImage;
+                            Log.d(TAG1, "peopleImage=" + peopleImage);
+
+                            OkGo.<File>get(peopleImage)
+                                    .tag(this)
+                                    .execute(new FileCallback() {
+                                        @Override
+                                        public void onSuccess(Response<File> response) {
+
+                                            String path = response.body().getAbsolutePath();
+                                            Uri uri = Uri.parse(path);
+                                            headImage1.setImageURI(uri);
+
+
+                                        }
+                                    });
+
 
                         }
 
@@ -211,9 +231,12 @@ public class PersonalInfoActivity extends AppCompatActivity {
                     //跳转到调用系统相机
                     gotoCamera();
                 }
+
                 popupWindow.dismiss();
+
             }
         });
+
         btnPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -277,8 +300,6 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 REQUEST_CAPTURE);
 
 
-
-
     }
 
 
@@ -295,7 +316,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
                             .tag(this)
                             .params("token", mLoginBean.getToken())
                             .params("peopleId", mLoginBean.getPeopleId())
-                            .params("phoneNum", mLoginBean.getPhoneNum())
+                            .params("userAccount", mLoginBean.getUserAccount())
                             .execute(new StringCallback() {
                                 @Override
                                 public void onSuccess(Response<String> response) {
@@ -312,8 +333,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
                                         mTvPhone.setText(workerBaseInfo.getWorkerBaseInfo().getPhoneNum());
                                         mTvHomeAddress.setText(
                                                 workerBaseInfo.getWorkerBaseInfo().getAddressCity()
-                                                + workerBaseInfo.getWorkerBaseInfo().getAddressCounty()
-                                                + workerBaseInfo.getWorkerBaseInfo().getAddressDetail());
+                                                        + workerBaseInfo.getWorkerBaseInfo().getAddressCounty()
+                                                        + workerBaseInfo.getWorkerBaseInfo().getAddressDetail());
 
                                     }
 
@@ -355,7 +376,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
                     Log.d(TAG1, "token=" + mLoginBean.getToken());
                     Log.d(TAG1, "peopleId=" + mLoginBean.getPeopleId());
-                    Log.d(TAG1, "phoneNum=" + mLoginBean.getPhoneNum());
+                    Log.d(TAG1, "phoneNum=" + mLoginBean.getUserAccount());
                     Log.d(TAG1, file.exists() + ",path=" + file.getAbsolutePath());
 
                     //上传头像
@@ -363,7 +384,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
                             .tag(this)
                             .params("token", mLoginBean.getToken())
                             .params("peopleId", mLoginBean.getPeopleId())
-                            .params("phoneNum", mLoginBean.getPhoneNum())
+                            .params("userAccount", mLoginBean.getUserAccount())
                             .params("uploadFile", file)
                             .execute(new StringCallback() {
                                 @Override

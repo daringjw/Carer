@@ -3,6 +3,7 @@ package com.jkkc.carer.ui.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -29,6 +30,7 @@ import static com.jkkc.carer.R.id.tvSex;
 
 public class EditPersonInfoActivity extends AppCompatActivity {
 
+    private static final String TAG1 = EditPersonInfoActivity.class.getSimpleName();
     private TextView mTvSex;
 
     LoginBean mLoginBean;
@@ -102,7 +104,7 @@ public class EditPersonInfoActivity extends AppCompatActivity {
                 .tag(this)
                 .params("token", mLoginBean.getToken())
                 .params("peopleId", mLoginBean.getPeopleId())
-                .params("phoneNum", mLoginBean.getPhoneNum())
+                .params("userAccount", mLoginBean.getUserAccount())
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -120,6 +122,11 @@ public class EditPersonInfoActivity extends AppCompatActivity {
                             etHomeAddress.setText(workerBaseInfo.getWorkerBaseInfo().getAddressCity()
                                     + workerBaseInfo.getWorkerBaseInfo().getAddressCounty()
                                     + workerBaseInfo.getWorkerBaseInfo().getAddressDetail());
+
+                            String peopleImage = workerBaseInfo.getWorkerBaseInfo().getPeopleImage();
+                            Log.d(TAG1,"peopleImage="+peopleImage);
+
+
 
 
                         }
@@ -147,11 +154,12 @@ public class EditPersonInfoActivity extends AppCompatActivity {
 
                 OkGo.<String>get(Constants.updCare)
                         .tag(this)
+                        .params("peopleName",peopleName)
                         .params("token", mLoginBean.getToken())
                         .params("peopleId", mLoginBean.getPeopleId())
                         .params("phoneNum", phoneNum)
                         .params("gender", gender)
-                        .params("peopleName", peopleName)
+                        .params("userAccount", mLoginBean.getUserAccount())
                         .params("nationality", "")
                         .params("bloodType", "")
                         .params("firstDept", "")

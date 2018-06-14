@@ -74,8 +74,6 @@ public class LoginActivity extends AppCompatActivity {
         tvVersion.setText("版本号：" + AppUtils.getAppVersionName() + AppUtils.getAppVersionCode());
 
 
-
-
     }
 
 
@@ -108,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                         //手机号，可以登录
                         OkGo.<String>get(Constants.login)
                                 .tag(this)
-                                .params("phoneNum", account)
+                                .params("userAccount", account)
                                 .params("password", pwd)
                                 .params("registerId", JPushInterface.getRegistrationID(LoginActivity.this))
                                 .execute(new StringCallback() {

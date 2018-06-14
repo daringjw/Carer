@@ -107,6 +107,14 @@
             android:screenOrientation="portrait"
             ></activity>
 
+         <activity
+            android:name=".ui.activity.ShiftActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            ></activity>
+
+
+
 
         <activity
             android:name=".view.ClipImageActivity"

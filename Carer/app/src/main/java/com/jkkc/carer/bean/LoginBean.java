@@ -8,18 +8,16 @@ public class LoginBean {
 
 
     /**
-     * token : 3effbb19-1fb8-42d3-8cf1-1cc38a5f382a
-     * id : 37
+     * token : 28508eaf-0d3e-4406-8e40-e10c3400d81e
      * peopleId : A00001
-     * phoneNum : 15999999999
+     * userAccount : 15999999999
      * code : success
      * msg : 登录成功
      */
 
     private String token;
-    private int id;
     private String peopleId;
-    private String phoneNum;
+    private String userAccount;
     private String code;
     private String msg;
 
@@ -31,14 +29,6 @@ public class LoginBean {
         this.token = token;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getPeopleId() {
         return peopleId;
     }
@@ -47,12 +37,12 @@ public class LoginBean {
         this.peopleId = peopleId;
     }
 
-    public String getPhoneNum() {
-        return phoneNum;
+    public String getUserAccount() {
+        return userAccount;
     }
 
-    public void setPhoneNum(String phoneNum) {
-        this.phoneNum = phoneNum;
+    public void setUserAccount(String userAccount) {
+        this.userAccount = userAccount;
     }
 
     public String getCode() {

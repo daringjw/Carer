@@ -1,15 +1,18 @@
 package com.jkkc.carer.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.jkkc.carer.R;
+import com.jkkc.carer.ui.activity.ShiftActivity;
 
 /**
  * Created by Guan on 2018/5/24.
@@ -44,12 +47,44 @@ public class DailyWorkFragment extends Fragment {
                 .image("http://pic.58pic.com/58pic/13/01/42/60r58PICfqi.jpg");
 
 
-
-
-
         sliderShow.addSlider(textSliderView);
         sliderShow.addSlider(textSliderView1);
         sliderShow.addSlider(textSliderView2);
+
+        //交接班
+        Button btnShift = view.findViewById(R.id.btnShift);
+        btnShift.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getActivity(), ShiftActivity.class);
+                startActivity(intent);
+
+
+
+            }
+        });
+
+        //排班信息
+        Button btnSchedulingInformation = view.findViewById(R.id.btnSchedulingInformation);
+        btnSchedulingInformation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+            }
+        });
+
+        //在线培训
+        Button btnOnlineTraining = view.findViewById(R.id.btnOnlineTraining);
+        btnOnlineTraining.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+            }
+        });
+
 
 
         return view;
@@ -57,10 +92,16 @@ public class DailyWorkFragment extends Fragment {
     }
 
 
+
+
+
     @Override
     public void onStop() {
         sliderShow.stopAutoCycle();
         super.onStop();
+
     }
+
+
 
 }

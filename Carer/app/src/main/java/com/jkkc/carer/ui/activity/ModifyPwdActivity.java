@@ -75,7 +75,7 @@ public class ModifyPwdActivity extends AppCompatActivity {
                                 .tag(this)
                                 .params("token", mLoginBean.getToken())
                                 .params("peopleId", mLoginBean.getPeopleId())
-                                .params("phoneNum", mLoginBean.getPhoneNum())
+                                .params("userAccount", mLoginBean.getUserAccount())
                                 .params("password", mOldPwd)
                                 .params("newpass", mNewPwd)
                                 .execute(new StringCallback() {

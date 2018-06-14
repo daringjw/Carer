@@ -215,7 +215,7 @@ public class AddCareActivity extends AppCompatActivity
                         .tag(this)
                         .params("token", mLoginBean.getToken())
                         .params("peopleId", mLoginBean.getPeopleId())
-                        .params("phoneNum", mLoginBean.getPhoneNum())
+                        .params("userAccount", mLoginBean.getUserAccount())
                         .params("nursingJson", mContent2)
                         .execute(new StringCallback() {
                             @Override
