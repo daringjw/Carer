@@ -8,6 +8,10 @@ public class IdBean {
 
     public String olderId;
     public String nurserId;
+    //护理名称
+    public String careName;
+
+    //护理项目
     public String careProject;
 
 

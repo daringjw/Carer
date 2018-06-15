@@ -12,6 +12,8 @@ import android.widget.Button;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.jkkc.carer.R;
+import com.jkkc.carer.ui.activity.OnlineTrainingActivity;
+import com.jkkc.carer.ui.activity.SchedulingInformationActivity;
 import com.jkkc.carer.ui.activity.ShiftActivity;
 
 /**
@@ -71,6 +73,8 @@ public class DailyWorkFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
+                Intent intent = new Intent(getActivity(), SchedulingInformationActivity.class);
+                startActivity(intent);
 
             }
         });
@@ -81,6 +85,8 @@ public class DailyWorkFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
+                Intent intent = new Intent(getActivity(), OnlineTrainingActivity.class);
+                startActivity(intent);
 
             }
         });

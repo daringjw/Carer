@@ -36,6 +36,9 @@ public class HealthCheckFragment extends Fragment{
     //定义一个回调接口
     public interface CallBackValue{
         public void SendMessageValue(String strValue);
+
+        public void SendVariety(String str);
+
     }
 
 
@@ -50,6 +53,8 @@ public class HealthCheckFragment extends Fragment{
         rgSelect.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
+
+                callBackValue.SendVariety("健康检测类");
 
                 switch (i){
 

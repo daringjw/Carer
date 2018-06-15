@@ -107,8 +107,20 @@
             android:screenOrientation="portrait"
             ></activity>
 
-         <activity
+        <activity
             android:name=".ui.activity.ShiftActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            ></activity>
+
+        <activity
+            android:name=".ui.activity.SchedulingInformationActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            ></activity>
+
+        <activity
+            android:name=".ui.activity.OnlineTrainingActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             ></activity>

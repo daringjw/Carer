@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+              android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -21,11 +21,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="交接班"
+            android:text="排班信息"
             android:textColor="#fff"
             android:textSize="20sp"/>
 
     </RelativeLayout>
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -39,7 +40,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvWorkerId"
+                android:id="@+id/tvWorkerNo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="护理员编号："/>
@@ -51,22 +52,34 @@
                 android:text="护理员姓名："/>
 
             <TextView
-                android:id="@+id/tvWorkArea"
+                android:id="@+id/tvBanci"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="护理区域："/>
+                android:text="班次："/>
+
+            <TextView
+                android:id="@+id/tvDutyPos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="值班岗位："/>
 
             <TextView
                 android:id="@+id/tvAreaManager"
+                android:text="区域主管："
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="区域主管："/>
+                android:layout_height="wrap_content"/>
 
             <TextView
-                android:id="@+id/tvDutyState"
+                android:id="@+id/tvDepartName"
+                android:text="部门："
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="值班状态："/>
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tvDutyTime"
+                android:text="值班日期："
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
 
 

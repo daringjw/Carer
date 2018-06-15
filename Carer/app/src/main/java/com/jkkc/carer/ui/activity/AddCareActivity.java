@@ -82,6 +82,9 @@ public class AddCareActivity extends AppCompatActivity
 
     LoginBean mLoginBean;
 
+
+    private MyFragmentPagerAdapter mAdapter1;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,9 +97,9 @@ public class AddCareActivity extends AppCompatActivity
 
         //Fragment+ViewPager+FragmentViewPager组合的使用
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
-        MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getSupportFragmentManager(),
+        mAdapter1 = new MyFragmentPagerAdapter(getSupportFragmentManager(),
                 this);
-        viewPager.setAdapter(adapter);
+        viewPager.setAdapter(mAdapter1);
 
         //TabLayout
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
@@ -121,6 +124,7 @@ public class AddCareActivity extends AppCompatActivity
         Gson gson = new Gson();
         mIdBean = gson.fromJson(result, IdBean.class);
         mIdBean.careProject = careName;
+        mIdBean.careName = variety;
 
 
         Button btnAddProject = (Button) findViewById(R.id.btnAddProject);
@@ -136,12 +140,36 @@ public class AddCareActivity extends AppCompatActivity
                     Gson gson = new Gson();
                     mIdBean = gson.fromJson(result, IdBean.class);
                     mIdBean.careProject = careName;
+                    mIdBean.careName = variety;
+
                     mIdBeanList = new ArrayList<>();
                     mIdBeanList.add(mIdBean);
+
+                    JSONObject jsonObject = new JSONObject();
+                    try {
+                        jsonObject.put("olderId", mIdBean.olderId);
+                        jsonObject.put("nurserId", mIdBean.nurserId);
+                        jsonObject.put("nursingName", mIdBean.careName);
+                        jsonObject.put("nursingValue", mIdBean.careProject);
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    mJsonArray = new JSONArray();
+                    mJsonArray.put(jsonObject);
+
+                    // 把Json数据转换成String类型，使用输出流向服务器写
+                    mContent2 = String.valueOf(mJsonArray);
+                    Log.d(TAG1, "content=" + mContent2);
+
 
                 } else if (mIdBean1 != null) {
 
                     mIdBean1.careProject = careName;
+                    mIdBean1.careName = variety;
+
                     mIdBeanList.add(mIdBean1);
                     mIdBean1 = null;
 
@@ -170,22 +198,6 @@ public class AddCareActivity extends AppCompatActivity
 
             }
         });
-
-
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("olderId", mIdBean.olderId);
-            jsonObject.put("nurserId", mIdBean.nurserId);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        mJsonArray = new JSONArray();
-        mJsonArray.put(jsonObject);
-
-        // 把Json数据转换成String类型，使用输出流向服务器写
-        mContent2 = String.valueOf(mJsonArray);
-        Log.d(TAG1, "content=" + mContent2);
 
 
 //        mTvCareProject.setText(content);
@@ -217,12 +229,15 @@ public class AddCareActivity extends AppCompatActivity
                         .params("peopleId", mLoginBean.getPeopleId())
                         .params("userAccount", mLoginBean.getUserAccount())
                         .params("nursingJson", mContent2)
+//                        .params("nursingName","健康1")
+//                        .params("nursingValue","剪指甲")
                         .execute(new StringCallback() {
                             @Override
                             public void onSuccess(Response<String> response) {
 
                                 String result = response.body().toString();
-                                Log.d(TAG1,"result="+result);
+                                Log.d(TAG1, "result=" + result);
+                                ToastUtils.showShort(result);
 
                             }
 
@@ -272,7 +287,8 @@ public class AddCareActivity extends AppCompatActivity
         public void onBindViewHolder(ViewHolder viewHolder, int position) {
 
             viewHolder.mTextView.setText("老人id:" + datas.get(position).olderId + "  ;  "
-                    + "护理项目：" + datas.get(position).careProject);
+                    + "护理类别：" + datas.get(position).careName
+                    + "\n护理项目：" + datas.get(position).careProject);
 
 
         }
@@ -319,6 +335,10 @@ public class AddCareActivity extends AppCompatActivity
                     try {
                         jsonObject.put("olderId", mIdBean1.olderId);
                         jsonObject.put("nurserId", mIdBean1.nurserId);
+
+                        jsonObject.put("nursingName", mIdBean.careName);
+                        jsonObject.put("nursingValue", mIdBean.careProject);
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -345,11 +365,18 @@ public class AddCareActivity extends AppCompatActivity
     @Override
     public void SendMessageValue(String strValue) {
 
-//        mTvCareProject.setText("护理项目：" + strValue);
         careName = strValue;
 
-
     }
+
+    String variety;
+
+    @Override
+    public void SendVariety(String str) {
+
+        variety = str;
+    }
+
 
     class MyFragmentPagerAdapter extends FragmentPagerAdapter {
         public final int COUNT = 5;

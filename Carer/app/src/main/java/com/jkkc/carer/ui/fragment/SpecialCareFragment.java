@@ -36,6 +36,8 @@ public class SpecialCareFragment extends Fragment {
     //定义一个回调接口
     public interface CallBackValue {
         public void SendMessageValue(String strValue);
+        public void SendVariety(String str);
+
     }
 
     @Nullable
@@ -49,6 +51,8 @@ public class SpecialCareFragment extends Fragment {
         rgSelect.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
+
+                callBackValue.SendVariety("特殊护理类");
 
                 switch (i) {
 
