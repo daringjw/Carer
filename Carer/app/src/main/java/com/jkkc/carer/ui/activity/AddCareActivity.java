@@ -126,6 +126,7 @@ public class AddCareActivity extends AppCompatActivity
         mIdBean.careProject = careName;
         mIdBean.careName = variety;
 
+        mJsonArray = new JSONArray();
 
         Button btnAddProject = (Button) findViewById(R.id.btnAddProject);
 
@@ -157,7 +158,7 @@ public class AddCareActivity extends AppCompatActivity
                         e.printStackTrace();
                     }
 
-                    mJsonArray = new JSONArray();
+
                     mJsonArray.put(jsonObject);
 
                     // 把Json数据转换成String类型，使用输出流向服务器写
